@@ -1,3 +1,4 @@
+<!--
 <!DOCTPYE html>
 <html>
 
@@ -6,3 +7,78 @@
 <script language="javascript" type="text/javascript" src="untitled.js"></script>
 </head>
 <body>
+-->
+
+ <!DOCTYPE html>
+  <meta charset="utf-8" />
+  <title>WebSocket Test</title>
+  <script language="javascript" type="text/javascript">
+
+  var wsUri = "wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=hOpFjYai7xmPq%2FJFN5pw21uw0ktFd%2BA%2B%2BveCVS8uPnJlxpdil66%2Fm9rKUru7ewL4E6FQdXKe%2F26gVAbCunhJlFOQ0uIADPECVqABXUP5tov3n4Jop1JEnP%2F7CwwPdL%2BEeGyta%2FzSaUfCPwilPLtrlbZOrJwpMxaD1JBxji1hRcbloZDIOUInubZI9gcTQzkb1%2BhXpT0ny4m46Jf7W5CN2IAHlsSeTxeaimB2opR5%2FI3euz90Ytz5PhX%2B4fxUKrJH9%2Bc9rEr4YMH5XFSJBuPYEOsSvs8eKfVfQlSO7YMAd8njfbBH87eRC0Xvh3aEYKKNTAT6CTopI5EF4HeZhiL9riyDQnb7Odsq2dKSxKDOYrZikd4wSgCjU%2FyABdtoixB4Ra83XnmvqHZJ6b4WHq2npeEQw%2BuhMgbl3i9ZUibtNEibPbsNGSs%2BJsdMMvN6rqxKn975gjLub1i6ckyEUPlq8Js7oJ9gplq6G1RfR8dQ9V8EUqIh08YB0hRksXW7xBJ%2FICp7wwmCRmwpKpUTRScPugQnLxrg1YNVlY4%2FZ%2FJEXjow5HiDAsBFx07REzfdfoARAwD6ueYErySy79IzzASiixgSOZil7jxqnSUd1Eh5mpAnagpI6ECes7DCYOu%2Byws%2BJi%2FAyGD8ib9s%2FEc4UUd1xtxJNQZFuf9oBXkuYFK6uwUQ6K0LuFWRX4id62ge4xQOQECHyzRRmR0ynk8d5bQ3bLoT%2BFZa77%2F09t%2FaU3Qp%2BNHtDgYepQn%2FKkfipbmm2ZPbWXACgmKKsNqUZjW0R5owCJG96T5pQG%2F22yPb%2BQjQQhEk7wlLr4sm%2BiRloQfTOIC8FaBZjctc4bUrFqMJaTAfyw2%2FUA2RDyrspdRZ4%2FU9LiQY1TLr3Rn2TQKGZCDIhDl8&model=en-US_BroadbandModel";
+  var output;
+
+  function init()
+  {
+    output = document.getElementById("output");
+    testWebSocket();
+  }
+
+  function testWebSocket()
+  {
+    websocket = new WebSocket(wsUri);
+
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    websocket.onerror = function(evt) { onError(evt) };
+  }
+
+  function onOpen(evt)
+  {
+    writeToScreen("CONNECTED");
+    doSend("WebSocket rocks");
+  }
+
+  function onClose(evt)
+  {
+    writeToScreen("DISCONNECTED");
+  }
+
+  function onMessage(evt)
+  {
+    writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
+    websocket.close();
+  }
+
+  function onError(evt)
+  {
+    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+  }
+
+  function doSend(message)
+  {
+    writeToScreen("SENT: " + message);
+     var message = {'action': 'start', 'content-type': 'audio/l16;rate=22050'};
+     websocket.send(JSON.stringify(message));
+
+     var blob = new Blob();
+     websocket.send(audio_file);
+
+  }
+
+  function writeToScreen(message)
+  {
+    var pre = document.createElement("p");
+    pre.style.wordWrap = "break-word";
+    pre.innerHTML = message;
+    output.appendChild(pre);
+  }
+
+  window.addEventListener("load", init, false);
+
+  </script>
+
+  <h2>WebSocket Test</h2>
+
+  <div id="output"></div>
+          
