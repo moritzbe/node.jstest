@@ -3,7 +3,7 @@ var token = 'LOodo1Ag%2BuFI57oWF28Z1ugDpa1xxl88QG3vuj%2Bo3LEXLB6o%2FhXnfba6pSkPS
 var wsURI = "wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=" + token
   + "&model=en-US_BroadbandModel";
 
-//var WebSocket = require('ws');
+var WebSocket = require('ws');
 console.log(wsURI);
 var websocket = new WebSocket(wsURI);
 
