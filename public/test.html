@@ -27,7 +27,7 @@
 	promise.done(function() {
 		wav_text = promise.responseText;
 		len = wav_text.length;
-		buf = new ArrayBUffer(length);
+		buf = new ArrayBuffer(length);
 		view = new Uint8Array(buf);
 		
 		for(var i = 0; i < len; i++) {
